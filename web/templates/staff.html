@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="grid">
+  <div class="card full">
+    <h2>Pending / Recent Applications</h2>
+    <table>
+      <tr><th>ID</th><th>User</th><th>Status</th><th>Submitted</th></tr>
+      {% for row in applications %}
+        <tr>
+          <td>{{ row.id }}</td>
+          <td>{{ row.username }}</td>
+          <td>{{ row.status }}</td>
+          <td>{{ row.submitted_at[:16] }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h2>Queue</h2>
+    {% for row in bookings %}
+      <p>#{{ row.id }} | User {{ row.user_id }}</p>
+    {% else %}
+      <p>No queued bookings.</p>
+    {% endfor %}
+  </div>
+  <div class="card">
+    <h2>Open Tickets</h2>
+    {% for row in tickets %}
+      <p>#{{ row.id }} | {{ row.category }}</p>
+    {% else %}
+      <p>No open tickets.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

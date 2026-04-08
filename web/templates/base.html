@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DMV Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">DMV Control</div>
+    <nav>
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('staff') }}">Staff</a>
+      <a href="{{ url_for('admin') }}">Admin</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  </header>
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+  <script>
+    async function refreshLive() {
+      const res = await fetch("/api/live");
+      const data = await res.json();
+      for (const [key, value] of Object.entries(data)) {
+        const node = document.querySelector(`[data-live="${key}"]`);
+        if (node) node.textContent = value;
+      }
+    }
+    setInterval(refreshLive, 8000);
+    refreshLive();
+  </script>
+</body>
+</html>

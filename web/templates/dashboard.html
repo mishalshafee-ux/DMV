@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="grid">
+  <div class="card">
+    <h2>User Overview</h2>
+    <p><strong>{{ viewer.username }}</strong></p>
+    <p>Wallet: ${{ user.wallet if user else 0 }}</p>
+    <p>Bank: ${{ user.bank if user else 0 }}</p>
+  </div>
+  <div class="card">
+    <h2>Live Status</h2>
+    <p>Tracked Users: <span data-live="tracked_users">0</span></p>
+    <p>Active Shifts: <span data-live="active_shifts">0</span></p>
+    <p>Queued Bookings: <span data-live="queued_bookings">0</span></p>
+    <p>Open Tickets: <span data-live="open_tickets">0</span></p>
+  </div>
+  <div class="card full">
+    <h2>Licenses</h2>
+    {% if licenses %}
+      <table>
+        <tr><th>ID</th><th>Type</th><th>Status</th><th>Issued</th></tr>
+        {% for row in licenses %}
+          <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.license_type }}</td>
+            <td>{{ row.status }}</td>
+            <td>{{ row.issued_at[:10] }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No licenses found.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
